@@ -1,12 +1,14 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Adventure {
+public class AdventureGame {
 
     private List< List< ObjectInDungeon > > dungeon = new ArrayList < List < ObjectInDungeon > >() ;
     private int rowLength ;
     private int columnLenght ;
     private ObjectInDungeon goldBox = ObjectInDungeon.valueOf( "GOLD" ) ;
+    private ObjectInDungeon AdventurerBox =  ObjectInDungeon.valueOf( "ADVENTURER" ) ;
+    private ObjectInDungeon MonterBox = ObjectInDungeon.valueOf( "MONSTER" ) ;
     private List < String > path = new ArrayList< String >();
 
     enum ObjectInDungeon {
@@ -71,10 +73,42 @@ public class Adventure {
         }
     }
 
+
+    public boolean setPostionOfMoster( int rowNum , int columnNum ) {
+
+        boolean rowNumValidate = ( rowNum < this.rowLength ) && ( rowNum >= 0 ) ;
+        boolean columnNumValidate = ( columnNum < this.columnLenght ) && ( columnNum >= 0 ) ;
+
+        if( rowNumValidate && columnNumValidate ){
+            this.dungeon.get( rowNum ).set( columnNum , goldBox );
+            this.MonterBox.setposition( rowNum , columnNum);
+            return true ; 
+        }
+        else{
+            return false ;
+        }
+    }
+
+    public boolean setInitialPostionOfAdventure( int rowNum , int columnNum ) {
+
+        boolean rowNumValidate = ( rowNum < this.rowLength ) && ( rowNum >= 0 ) ;
+        boolean columnNumValidate = ( columnNum < this.columnLenght ) && ( columnNum >= 0 ) ;
+
+        if( rowNumValidate && columnNumValidate ){
+            this.dungeon.get( rowNum ).set( columnNum , goldBox );
+            this.MonterBox.setposition( rowNum , columnNum);
+            return true ; 
+        }
+        else{
+            return false ;
+        }
+    }
+
+
     public int getPathToTheGold( int AdventurerInizialRowNum , int AdventurerInizialColumnNum ){
 
-        ObjectInDungeon currentDungeonBox = ObjectInDungeon.valueOf( "ADVENTURER" ) ;
-    
+        ObjectInDungeon currentDungeonBox = this.AdventurerBox ;
+
         int currentRow = AdventurerInizialRowNum ,
             currentcolumn = AdventurerInizialColumnNum ,
             count = -1 ;

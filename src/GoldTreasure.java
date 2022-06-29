@@ -8,7 +8,7 @@ public class GoldTreasure {
 
     public static void main( String[] args ) throws IOException {
 
-        Adventure adventureObj = new Adventure() ;
+        AdventureGame adventureObj = new AdventureGame() ;
         BufferedReader reader = new BufferedReader( new InputStreamReader( System.in ) ) ;
         boolean flag = true ;
 
@@ -57,7 +57,7 @@ public class GoldTreasure {
         }while( flag ) ;
 
         System.out.println(  "Minimum number of steps" + stepCounttoGoal ) ;
-        System.out.println( "path" + adventureObj.getPath() ) ;
+        System.out.println( "Path To Get Treasure " + adventureObj.getPath() ) ;
 
     } 
 
