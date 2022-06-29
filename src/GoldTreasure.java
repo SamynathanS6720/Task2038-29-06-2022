@@ -10,10 +10,10 @@ public class GoldTreasure {
 
         Adventure adventureObj = new Adventure() ;
         BufferedReader reader = new BufferedReader( new InputStreamReader( System.in ) ) ;
-        boolean flag = false ;
+        boolean flag = true ;
 
-        System.out.println( "Dimensions of the dungeon(Row x Column) :" );
         do {
+            System.out.println( "Dimensions of the dungeon(Row x Column) :" );
             try{ 
                 int rowLen = Integer.parseInt( reader.readLine() ) ;  
                 int columnLen = Integer.parseInt( reader.readLine() ) ;  
@@ -24,23 +24,27 @@ public class GoldTreasure {
                 System.out.println( " Invalid Integer Value " );
             }
         }while( flag ) ;
-        System.out.println( "Position of Gold :" );
         do {
+            System.out.println( "Position of Gold :" );
             try{ 
                 int rownum = Integer.parseInt( reader.readLine() ) ;  
                 int columnnum = Integer.parseInt( reader.readLine() ) ;  
-                adventureObj.setPostionOfGold( rownum-1 , columnnum-1 ) ;
+                if( !adventureObj.setPostionOfGold( rownum-1 , columnnum-1 ) ) {
+                    throw new Exception( "Enter Cell Inside the Dugeon " ) ;
+                }
                 // adventureObj.setPostionOfGold( 0 , 3 ) ;
                 break ;
             }catch( NumberFormatException ex ){
                 System.out.println( " Invalid Integer Value " );
+            }catch( Exception ex) {
+                System.out.println( ex ); 
             }
         }while( flag ) ;
 
         int stepCounttoGoal = 0 ;
 
-        System.out.println( "Position of Adventurer :" );
         do {
+            System.out.println( "Position of Adventurer :" );
             try{ 
                 int rownum = Integer.parseInt( reader.readLine() ) ;  
                 int columnnum = Integer.parseInt( reader.readLine() ) ;  

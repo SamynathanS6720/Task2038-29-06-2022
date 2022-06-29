@@ -78,6 +78,7 @@ public class Adventure {
         int currentRow = AdventurerInizialRowNum ,
             currentcolumn = AdventurerInizialColumnNum ,
             count = -1 ;
+        
         if( currentRow == this.goldBox.getRowNum() && currentcolumn == this.goldBox.getColumn() ){
             return 0 ; 
         }
@@ -102,7 +103,7 @@ public class Adventure {
                 }
             }
 
-            this.path.add( currentRow + "," + currentcolumn + "->" )   ;
+            this.path.add( (currentRow +1 ) + "," + (currentcolumn + 1 ) + "->" )   ;
             // currentDungeonBox = this.dungeon.get( currentRow ).get( currentcolumn ) ;
         }while( currentDungeonBox != this.goldBox );
 
@@ -110,6 +111,7 @@ public class Adventure {
     }
 
     public String getPath() {
+
         return String.valueOf( this.path ) ;
     }
 
