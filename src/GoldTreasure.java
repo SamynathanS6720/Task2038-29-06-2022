@@ -48,6 +48,7 @@ public class GoldTreasure {
             try{ 
                 int rownum = Integer.parseInt( reader.readLine() ) ;  
                 int columnnum = Integer.parseInt( reader.readLine() ) ;  
+                adventureObj.setInitialPostionOfAdventurer( rownum-1 , columnnum-1 ) ;
                 stepCounttoGoal = adventureObj.getPathToTheGold( rownum-1 , columnnum-1 ) ;
                 // stepCounttoGoal = adventureObj.getPathToTheGold( 4 , 0 ) ;
                 break ;
@@ -56,8 +57,8 @@ public class GoldTreasure {
             }
         }while( flag ) ;
 
-        System.out.println(  "Minimum number of steps" + stepCounttoGoal ) ;
-        System.out.println( "Path To Get Treasure " + adventureObj.getPath() ) ;
+        System.out.println(  "Minimum number of steps  : " + stepCounttoGoal ) ;
+        System.out.println( "Path To Get Treasure : " + adventureObj.getPath() ) ;
 
     } 
 
