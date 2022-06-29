@@ -1,16 +1,17 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdventureGame {
+public class GameMethods {
 
     private List< List< ObjectInDungeon > > dungeon = new ArrayList < List < ObjectInDungeon > >() ;
     private int rowLength ;
     private int columnLenght ;
+    private List < String > path = new ArrayList< String >();
     private ObjectInDungeon goldBox = ObjectInDungeon.valueOf( "GOLD" ) ;
     private ObjectInDungeon AdventurerBox =  ObjectInDungeon.valueOf( "ADVENTURER" ) ;
     private ObjectInDungeon MonterBox = ObjectInDungeon.valueOf( "MONSTER" ) ;
-    private List < String > path = new ArrayList< String >();
-
+    private ObjectInDungeon TiggerBox = ObjectInDungeon.valueOf( "TRRIGER" ) ;
+    
     enum ObjectInDungeon {
         ADVENTURER,
         GOLD,
@@ -89,6 +90,21 @@ public class AdventureGame {
         }
     }
 
+    public boolean setPostionOfTrigger( int rowNum , int columnNum ) {
+
+        boolean rowNumValidate = ( rowNum < this.rowLength ) && ( rowNum >= 0 ) ;
+        boolean columnNumValidate = ( columnNum < this.columnLenght ) && ( columnNum >= 0 ) ;
+
+        if( rowNumValidate && columnNumValidate ){
+            this.dungeon.get( rowNum ).set( columnNum , goldBox );
+            this.TiggerBox.setposition( rowNum , columnNum);
+            return true ; 
+        }
+        else{
+            return false ;
+        }
+    }
+
     public boolean setInitialPostionOfAdventurer( int rowNum , int columnNum ) {
 
         boolean rowNumValidate = ( rowNum < this.rowLength ) && ( rowNum >= 0 ) ;
@@ -111,6 +127,52 @@ public class AdventureGame {
 
         int currentRow = currentDungeonBox.getRowNum() ,
             currentcolumn = currentDungeonBox.getColumn() ,
+            stepCount = -1 ;
+        
+        if( currentRow == this.goldBox.getRowNum() && currentcolumn == this.goldBox.getColumn() ){
+            return 0 ; 
+        }
+        do{
+            stepCount = stepCount + 1 ;
+            if( currentRow < this.goldBox.getRowNum() && currentRow < this.rowLength ){
+              currentRow = currentRow + 1;
+            }
+            else if( currentRow > this.goldBox.getRowNum() && currentRow >= 0  ){
+                currentRow = currentRow - 1;
+            }
+            else if( currentRow == this.goldBox.getRowNum() ) {      
+                if( currentcolumn > this.goldBox.getColumn() && currentcolumn >= 0 ){
+                    currentcolumn = currentcolumn - 1;
+
+                }
+                else if( currentcolumn < this.goldBox.getColumn() && currentcolumn < this.columnLenght ){
+                    currentcolumn = currentcolumn + 1;
+                }
+                // else if ( currentcolumn == this.goldBox.getColumn() ){
+                //     return count ;
+                // }
+            }
+
+            this.path.add( "(" + (currentRow +1 ) + "," + (currentcolumn + 1 ) + ")->" )   ;
+            currentDungeonBox = this.dungeon.get( currentRow ).get( currentcolumn ) ;
+        }while( currentDungeonBox != this.goldBox );
+
+        return stepCount + 1 ;
+    }
+
+    public String getPath() {
+
+        return String.valueOf( this.path ) ;
+    }
+
+
+
+    public int getPathToTheGoldWithoutDestroy( int AdventurerInizialRowNum , int AdventurerInizialColumnNum ){
+
+        ObjectInDungeon currentDungeonBox = this.AdventurerBox ;
+
+        int currentRow = AdventurerInizialRowNum ,
+            currentcolumn = AdventurerInizialColumnNum ,
             count = -1 ;
         
         if( currentRow == this.goldBox.getRowNum() && currentcolumn == this.goldBox.getColumn() ){
@@ -143,54 +205,5 @@ public class AdventureGame {
 
         return count + 1 ;
     }
-
-    public String getPath() {
-
-        return String.valueOf( this.path ) ;
-    }
-
-
-
-    // public int getPathToTheGoldWithoutDestroy( int AdventurerInizialRowNum , int AdventurerInizialColumnNum ){
-
-    //     ObjectInDungeon currentDungeonBox = this.AdventurerBox ;
-
-    //     int currentRow = AdventurerInizialRowNum ,
-    //         currentcolumn = AdventurerInizialColumnNum ,
-    //         count = -1 ;
-        
-    //     if( currentRow == this.goldBox.getRowNum() && currentcolumn == this.goldBox.getColumn() ){
-    //         return 0 ; 
-    //     }
-    //     do{
-    //         count = count + 1 ;
-    //         if( currentRow < this.goldBox.getRowNum() && currentRow < this.rowLength ){
-    //           currentRow = currentRow + 1;
-    //         }
-    //         else if( currentRow > this.goldBox.getRowNum() && currentRow >= 0  ){
-    //             currentRow = currentRow - 1;
-    //         }
-    //         else if( currentRow == this.goldBox.getRowNum() ) {      
-    //             if( currentcolumn > this.goldBox.getColumn() && currentcolumn >= 0 ){
-    //                 currentcolumn = currentcolumn - 1;
-
-    //             }
-    //             else if( currentcolumn < this.goldBox.getColumn() && currentcolumn < this.columnLenght ){
-    //                 currentcolumn = currentcolumn + 1;
-    //             }
-    //             // else if ( currentcolumn == this.goldBox.getColumn() ){
-    //             //     return count ;
-    //             // }
-    //         }
-
-    //         this.path.add( "(" + (currentRow +1 ) + "," + (currentcolumn + 1 ) + ")->" )   ;
-    //         currentDungeonBox = this.dungeon.get( currentRow ).get( currentcolumn ) ;
-    //     }while( currentDungeonBox != this.goldBox );
-
-    //     return count + 1 ;
-    // }
-    
-
-
 
 }
